@@ -1,0 +1,1405 @@
+{
+  "name": "xerox",
+  "canvas": {
+    "width": 5831.0,
+    "height": 6412.0
+  },
+  "blocks": [
+    {
+      "id": "C_0",
+      "width": 1295.0,
+      "height": 2114.0
+    },
+    {
+      "id": "C_1",
+      "width": 882.0,
+      "height": 1316.0
+    },
+    {
+      "id": "C_2",
+      "width": 1295.0,
+      "height": 2534.0
+    },
+    {
+      "id": "C_3",
+      "width": 1295.0,
+      "height": 490.0
+    },
+    {
+      "id": "C_4",
+      "width": 756.0,
+      "height": 840.0
+    },
+    {
+      "id": "C_5",
+      "width": 1162.0,
+      "height": 1939.0
+    },
+    {
+      "id": "C_6",
+      "width": 1218.0,
+      "height": 1652.0
+    },
+    {
+      "id": "C_7",
+      "width": 1295.0,
+      "height": 616.0
+    },
+    {
+      "id": "C_8",
+      "width": 1295.0,
+      "height": 2569.0
+    },
+    {
+      "id": "C_9",
+      "width": 1295.0,
+      "height": 1939.0
+    }
+  ],
+  "nets": [
+    {
+      "net_id": "PBMD2I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD5I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD4I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A1C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PBMD5",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PH1",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OBH",
+      "blocks": [
+        "C_0",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "PBMD4I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHRXD1",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD0C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PRROPD",
+      "blocks": [
+        "C_0",
+        "C_4",
+        "C_7",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHRXD0",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHRXD2",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRWOPD",
+      "blocks": [
+        "C_0",
+        "C_7",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PAIR1",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OAH",
+      "blocks": [
+        "C_0",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "DHRXD3",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHRXD4",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "TXOBH",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "MR",
+      "blocks": [
+        "C_0",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "RXOPDB",
+      "blocks": [
+        "C_0",
+        "C_4",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD5C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PRD7C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "RESET",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_7",
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD1I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NPH2",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_7",
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHRXD7",
+      "blocks": [
+        "C_0",
+        "C_2",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A4C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "A2C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "DHTD3I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PAIR2",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD7I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD6",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OCD",
+      "blocks": [
+        "C_0",
+        "C_5",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD5I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD4",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD3",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "RXOPDA",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD3I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OB",
+      "blocks": [
+        "C_0",
+        "C_6",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A3C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PRD1C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "OEF",
+      "blocks": [
+        "C_0",
+        "C_5",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD7",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NRLFTC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "DHRXD5",
+      "blocks": [
+        "C_0",
+        "C_2",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD6C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "DHRXD6",
+      "blocks": [
+        "C_0",
+        "C_2",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PH2",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD2I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DHTD0I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A2PC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PRD3C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "OAB",
+      "blocks": [
+        "C_0",
+        "C_2",
+        "C_5",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A1PC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PBMD7I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A3PC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "DHTD6I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NAND",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD6I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD1",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "TXOPDA",
+      "blocks": [
+        "C_0",
+        "C_4",
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD2C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PBMD0",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD1I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NWLFTC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "TXOPDB",
+      "blocks": [
+        "C_0",
+        "C_4",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NOR",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PBMD0I",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD4C",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "TXOAH",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "A4PC",
+      "blocks": [
+        "C_0",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "PBMD2",
+      "blocks": [
+        "C_0",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "ERC",
+      "blocks": [
+        "C_1",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "CT",
+      "blocks": [
+        "C_1",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "UAORB",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "TXOBL",
+      "blocks": [
+        "C_1",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "TXSTT0",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "FDK",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "TS1",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "TXACK",
+      "blocks": [
+        "C_1",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "TXOAL",
+      "blocks": [
+        "C_1",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "TXB",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "RA",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "WCR",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "TXSTT1",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "COUNT",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "TXINT",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "S0",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "TXREQ",
+      "blocks": [
+        "C_1",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "TS0",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "LWC",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RST",
+      "blocks": [
+        "C_1",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PROPA",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "NRLFTA",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "PRD3A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "TXSTM",
+      "blocks": [
+        "C_2",
+        "C_7",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXINTA",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "PRADM",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A4PA",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "LK",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRINC",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A1A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RSA",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "WAA",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "PRD0A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RSB",
+      "blocks": [
+        "C_2",
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PAL",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "RXADM",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "TXADIN",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXOPAA",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A3A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "BF",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "CPR",
+      "blocks": [
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "A1PA",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXINCP",
+      "blocks": [
+        "C_2",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "TXWDCR",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXINTB",
+      "blocks": [
+        "C_2",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "NWLFTA",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "A2PA",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXOPAB",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "S1",
+      "blocks": [
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "PRD6A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD4A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD1A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD2A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "SIZE",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A4A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD5A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A2A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "TXOPA",
+      "blocks": [
+        "C_2",
+        "C_4",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "L64",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "A3PA",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD7A",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "RXADBM",
+      "blocks": [
+        "C_2",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "NWRI",
+      "blocks": [
+        "C_3",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "PRWREQ",
+      "blocks": [
+        "C_3",
+        "C_4",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "PRRREQ",
+      "blocks": [
+        "C_3",
+        "C_4",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "NRS",
+      "blocks": [
+        "C_3",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "NWS",
+      "blocks": [
+        "C_3",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "RDWR",
+      "blocks": [
+        "C_3",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "TIDTC2",
+      "blocks": [
+        "C_3",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "NWA",
+      "blocks": [
+        "C_3",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "PAORB",
+      "blocks": [
+        "C_4",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "NRESET",
+      "blocks": [
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "LAORB",
+      "blocks": [
+        "C_4",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "PRRDOP",
+      "blocks": [
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "RRR",
+      "blocks": [
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "LO",
+      "blocks": [
+        "C_5",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "DC1",
+      "blocks": [
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "BR",
+      "blocks": [
+        "C_5",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "DC0",
+      "blocks": [
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "SR",
+      "blocks": [
+        "C_5",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "MC",
+      "blocks": [
+        "C_5",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "CC",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "OA",
+      "blocks": [
+        "C_6",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OBL",
+      "blocks": [
+        "C_6",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "AU",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "OAL",
+      "blocks": [
+        "C_6",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "OR",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PBL",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "WAB",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "AL",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "ID",
+      "blocks": [
+        "C_6",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "PRD0B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A1B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A3B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A4PB",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A1PB",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD4B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD7B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD6B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD3B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD5B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD2B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "NWRGTB",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "PRD1B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A3PB",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A2PB",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A4B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    },
+    {
+      "net_id": "A2B",
+      "blocks": [
+        "C_8",
+        "C_9"
+      ]
+    }
+  ]
+}

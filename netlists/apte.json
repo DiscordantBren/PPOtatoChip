@@ -1,0 +1,403 @@
+{
+  "name": "apte",
+  "canvas": {
+    "width": 10500.0,
+    "height": 10500.0
+  },
+  "blocks": [
+    {
+      "id": "C_0",
+      "width": 3146.0,
+      "height": 1826.0
+    },
+    {
+      "id": "C_1",
+      "width": 3146.0,
+      "height": 1826.0
+    },
+    {
+      "id": "C_2",
+      "width": 3146.0,
+      "height": 1826.0
+    },
+    {
+      "id": "C_3",
+      "width": 3146.0,
+      "height": 1826.0
+    },
+    {
+      "id": "C_4",
+      "width": 3186.0,
+      "height": 1832.0
+    },
+    {
+      "id": "C_5",
+      "width": 3186.0,
+      "height": 1832.0
+    },
+    {
+      "id": "C_6",
+      "width": 3186.0,
+      "height": 1832.0
+    },
+    {
+      "id": "C_7",
+      "width": 3186.0,
+      "height": 1832.0
+    },
+    {
+      "id": "C_8",
+      "width": 826.0,
+      "height": 286.0
+    }
+  ],
+  "nets": [
+    {
+      "net_id": "new2",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "ResetLS1",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new12",
+      "blocks": [
+        "C_0",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "new9",
+      "blocks": [
+        "C_0",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new16",
+      "blocks": [
+        "C_0",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "new19",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "Phi2H",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "new14",
+      "blocks": [
+        "C_0",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "new18",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "new15",
+      "blocks": [
+        "C_0",
+        "C_4"
+      ]
+    },
+    {
+      "net_id": "Phi1H",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "new1",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new13",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "new17",
+      "blocks": [
+        "C_0",
+        "C_1"
+      ]
+    },
+    {
+      "net_id": "new23",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "TestLHQ1",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "TestHHQ1",
+      "blocks": [
+        "C_0",
+        "C_1",
+        "C_2",
+        "C_3",
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7",
+        "C_8"
+      ]
+    },
+    {
+      "net_id": "new34",
+      "blocks": [
+        "C_1",
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "new24",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "new20",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "new27",
+      "blocks": [
+        "C_1",
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "new28",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "new25",
+      "blocks": [
+        "C_1",
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "new29",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "new30",
+      "blocks": [
+        "C_1",
+        "C_2"
+      ]
+    },
+    {
+      "net_id": "new26",
+      "blocks": [
+        "C_1",
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "new37",
+      "blocks": [
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "new39",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new36",
+      "blocks": [
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "new35",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new41",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new31",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new38",
+      "blocks": [
+        "C_2",
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "new45",
+      "blocks": [
+        "C_2",
+        "C_3",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new40",
+      "blocks": [
+        "C_2",
+        "C_3"
+      ]
+    },
+    {
+      "net_id": "new47",
+      "blocks": [
+        "C_3",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new49",
+      "blocks": [
+        "C_3",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new48",
+      "blocks": [
+        "C_3",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new0",
+      "blocks": [
+        "C_4",
+        "C_5",
+        "C_6",
+        "C_7"
+      ]
+    },
+    {
+      "net_id": "new53",
+      "blocks": [
+        "C_4",
+        "C_5"
+      ]
+    },
+    {
+      "net_id": "new61",
+      "blocks": [
+        "C_5",
+        "C_6"
+      ]
+    },
+    {
+      "net_id": "new68",
+      "blocks": [
+        "C_6",
+        "C_7"
+      ]
+    }
+  ]
+}
