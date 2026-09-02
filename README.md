@@ -7,14 +7,12 @@ Based on the Google AlphaChip paper - Chip Placement with Deep Reinforcement Lea
 
 ---
 
-## This is what the TUI looks like
-
 ![TUI](tui_img.png)
 
 
-## A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist
-
 ![Demo placement for ami49](demo_placement.png)
+
+A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist
 
 
 
