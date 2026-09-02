@@ -3,12 +3,16 @@
 AlphaChip, but less alpha.
 Work in progress.
 
+Based on the Google AlphaChip paper - Chip Placement with Deep Reinforcement Learning: arxiv/2004.10746, 2020.
+
 ---
 ![TUI](tui_img.png)
+** This is what the TUI looks like**
+
+
 ![Demo placement for ami49](demo_placement.png)
+**A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist**
 
-
-Based on the Google AlphaChip paper.
 
 The idea is to sequentially place components onto a canvas so wirelength stays 
 low. PPOtatoChip tries to learn that using Proximal Policy Optimization (PPO)
@@ -59,7 +63,7 @@ matplotlib
 - **Fix visual bugs** — the tui is functional but sometimes has white bands at random places.
 - **Convergence analysis** — need to think more about this.
 - **Stress-test hyperparameters** — systematically run every knob (clip
-  epsilon, entropy coefficient, hidden dimensions, you name it) in isolation
+  epsilon, entropy coefficient, hidden dimensions ...) in isolation
   to see if something breaks.
 - **Better wirelength metric** — HPWL is the standard proxy but it's not
   great. Look into steiner-tree (and other) alternatives that correlate
