@@ -1,7 +1,4 @@
-"""
-Matplotlib plot generators for PPOtatoChip analysis.
-Each function is self-contained — no CLI logic, just data → figure.
-"""
+# Plot generators. Each function takes data, returns a figure.
 
 import json
 from pathlib import Path
@@ -16,7 +13,7 @@ from ..visualize import plot_placement
 
 
 def learning_curve(run_path: Path) -> plt.Figure:
-    """Plot HPWL and PPO loss components over training iterations."""
+    # Plot HPWL and PPO loss components over training iterations.
 
     metrics_path = run_path / "metrics.jsonl"
     if not metrics_path.exists():
@@ -36,7 +33,6 @@ def learning_curve(run_path: Path) -> plt.Figure:
 
     fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    # Left: HPWL and Total Reward
     ax = axes[0]
     if hpwls:
         ax.plot(iterations, hpwls, marker="o", linestyle="-", label="HPWL", color="tab:blue")
@@ -48,7 +44,6 @@ def learning_curve(run_path: Path) -> plt.Figure:
     ax.legend()
     ax.grid(True, alpha=0.3)
 
-    # Right: PPO Loss Components
     ax = axes[1]
     ax.plot(range(len(policy_losses)), policy_losses, label="Policy Loss", alpha=0.8)
     ax.plot(range(len(value_losses)), value_losses, label="Value Loss", alpha=0.8)
@@ -71,7 +66,7 @@ def placement_compare(
     num_rows: int,
     num_cols: int,
 ) -> plt.Figure:
-    """Side-by-side placement comparison between two runs (e.g. vanilla PVN vs Graph PPO)."""
+    # Side-by-side placement comparison between two runs.
 
     def _best_placement(run_path: Path) -> tuple[dict, float]:
         samples_path = run_path / "placements.jsonl"
@@ -102,7 +97,6 @@ def placement_compare(
     config_before, hpwl_before = _best_placement(before_run_path)
     config_after, hpwl_after = _best_placement(after_run_path)
 
-    # Find the netlist path from one of the configs
     with open(before_run_path / "config.json") as f:
         config_data = json.load(f)
     netlist_path = config_data.get("netlist_path", f"netlists/{netlist_name}.json")
@@ -132,15 +126,13 @@ def scale_generalize(
     num_rows: int,
     num_cols: int,
 ) -> plt.Figure:
-    """Evaluate a trained Graph PPO model across multiple netlists and generate placement visualizations."""
+    # Evaluate a trained model across multiple netlists and show placement visualizations.
 
-    # Load config to get architecture dimensions
     with open(model_run_path / "config.json") as f:
         train_config = json.load(f)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Build model from one netlist to infer input dims, then swap netlists per eval
     dummy_netlist = Netlist(netlist_paths[0])
     dummy_env = PlacementEnv(netlist=dummy_netlist, num_rows=num_rows, num_cols=num_cols)
     dummy_obs = dummy_env.get_graph_observation()
@@ -194,7 +186,6 @@ def scale_generalize(
         placements.append((netlist, config, net_name, hpwl))
         hpwls.append(hpwl)
 
-    # Determine grid layout
     n = len(placements)
     cols = min(3, n)
     rows = (n + cols - 1) // cols
@@ -207,14 +198,11 @@ def scale_generalize(
     for i, (netlist, config, name, hpwl) in enumerate(placements):
         ax = axes[i]
         if config is not None:
-            from ..visualize import plot_placement
-            title = f"{name} (HPWL: {hpwl:.2f})"
-            plot_placement(netlist, config, num_rows, num_cols, title=title, ax=ax)
+            plot_placement(netlist, config, num_rows, num_cols, title=f"{name} (HPWL: {hpwl:.2f})", ax=ax)
         else:
             ax.text(0.5, 0.5, f"{name}\nFailed", ha="center", va="center", transform=ax.transAxes)
             ax.set_title(name)
 
-    # Hide unused subplots
     for i in range(n, len(axes)):
         axes[i].set_visible(False)
 
@@ -227,7 +215,7 @@ def encoder_ablation(
     run_paths: list[Path],
     labels: list[str],
 ) -> plt.Figure:
-    """Overlay learning curves from multiple Graph PPO runs (frozen vs fine-tuned vs scratch)."""
+    # Overlay learning curves from multiple Graph PPO runs.
 
     fig, ax = plt.subplots(figsize=(10, 6))
 

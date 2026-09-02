@@ -1,6 +1,5 @@
-"""
-Experiment runner: runs parameter sweeps with multiple seeds and generates PDF reports.
-"""
+# Experiment runner - runs parameter sweeps with multiple seeds and generates PDF reports.
+
 
 import json
 import random
@@ -33,7 +32,7 @@ def run_experiment(
     stop_event: threading.Event | None = None,
     progress_callback=None,
 ) -> list[dict]:
-    """Run a parameter sweep experiment with multiple runs per value."""
+    # Run a parameter sweep experiment with multiple runs per value.
     results = []
     total = len(sweep_values) * num_runs
     run_counter = 0
@@ -230,7 +229,6 @@ def _generate_report(results, sweep_param, sweep_values, num_runs, all_netlists)
     }, open(exp_dir / "config.json", "w"), indent=2, default=str)
 
     with PdfPages(report_path) as pdf:
-        _page_vanilla_vs_trained(pdf, results, sweep_param, sweep_values, val_colors)
         _page_netlist_bars(pdf, results, sweep_param, sweep_values, val_colors, num_runs, all_netlists)
         _page_vanilla_vs_trained_placements(pdf, results, sweep_param, sweep_values)
         _page_netlist_placements(pdf, results, sweep_param, sweep_values, all_netlists, val_colors)
@@ -241,35 +239,7 @@ def _generate_report(results, sweep_param, sweep_values, num_runs, all_netlists)
     return report_path
 
 
-# ── Page 1: Vanilla vs Trained HPWL ──
-
-def _page_vanilla_vs_trained(pdf, results, sweep_param, sweep_values, val_colors):
-    fig, ax = plt.subplots(figsize=A4)
-    for val in sweep_values:
-        val_results = [r for r in results if r["value"] == val]
-        color = val_colors[val]
-        for vr in val_results:
-            vp = vr.get("hpwl_vp")
-            gp = vr.get("hpwl")
-            if vp is not None and gp is not None:
-                ax.plot([0, 1], [vp, gp], color=color, alpha=0.3, linewidth=0.5, marker="o")
-        vps = [r["hpwl_vp"] for r in val_results if r.get("hpwl_vp") is not None]
-        gps = [r["hpwl"] for r in val_results if r.get("hpwl") is not None]
-        if vps and gps:
-            ax.plot([0, 1], [sum(vps)/len(vps), sum(gps)/len(gps)], color=color, linewidth=2,
-                    marker="s", markersize=8, label=f"{sweep_param}={val} (mean)")
-    ax.set_xticks([0, 1])
-    ax.set_xticklabels(["Vanilla PVN", "Graph PPO"])
-    ax.set_ylabel("HPWL")
-    ax.set_title("Vanilla PVN vs Graph PPO HPWL (all runs)")
-    ax.legend(fontsize=8)
-    ax.grid(True, alpha=0.3)
-    fig.tight_layout(rect=[0, 0, 1, 0.95])
-    pdf.savefig(fig)
-    plt.close(fig)
-
-
-# ── Page 2: HPWL per netlist, grouped bars ──
+# Page 1: HPWL per netlist, grouped bars
 
 def _page_netlist_bars(pdf, results, sweep_param, sweep_values, val_colors, num_runs, all_netlists):
     fig, ax = plt.subplots(figsize=A4)
@@ -310,7 +280,7 @@ def _page_netlist_bars(pdf, results, sweep_param, sweep_values, val_colors, num_
     plt.close(fig)
 
 
-# ── Page 3: Vanilla vs Trained placements (median run per sweep value) ──
+# Page 2: Vanilla vs Trained placements (median run per sweep value)
 
 def _page_vanilla_vs_trained_placements(pdf, results, sweep_param, sweep_values):
     valid = [r for r in results if r["hpwl"] is not None]
@@ -370,7 +340,7 @@ def _page_vanilla_vs_trained_placements(pdf, results, sweep_param, sweep_values)
         plt.close(fig)
 
 
-# ── Page 4+: One page per netlist, placements for each sweep value ──
+# Page 3+: One page per netlist, placements for each sweep value
 
 def _page_netlist_placements(pdf, results, sweep_param, sweep_values, all_netlists, val_colors):
     train_netlist = results[0]["netlist"] if results else "xerox"
@@ -434,7 +404,7 @@ def _page_netlist_placements(pdf, results, sweep_param, sweep_values, all_netlis
             plt.close(fig)
 
 
-# ── Learning Curves ──
+# Learning Curves
 
 def _page_learning_curves(pdf, results, sweep_param, sweep_values, val_colors):
     fig, ax = plt.subplots(figsize=A4)
@@ -465,7 +435,7 @@ def _page_learning_curves(pdf, results, sweep_param, sweep_values, val_colors):
     plt.close(fig)
 
 
-# ── Summary Table ──
+# Summary Table
 
 def _page_summary_table(pdf, results, sweep_param, sweep_values, num_runs):
     fig, ax = plt.subplots(figsize=A4)

@@ -1,6 +1,4 @@
-"""
-Train mode selection screen. Choose training mode before parameter editor.
-"""
+# Train mode selection
 
 from textual.app import ComposeResult
 from textual.screen import Screen
@@ -20,7 +18,6 @@ TRAIN_MODES = [
 
 
 class TrainModeScreen(Screen):
-    """Select training mode before configuring parameters."""
 
     def __init__(self):
         super().__init__()

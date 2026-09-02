@@ -1,6 +1,4 @@
-"""
-Experiment wizard screens - vim-style, sequential phases.
-"""
+# Experiment wizard - setup, progress, results.
 
 import threading
 from pathlib import Path
@@ -17,11 +15,10 @@ from ..experiments.runner import run_experiment
 
 
 class ExperimentSetupScreen(Screen):
-    """Vim-style experiment setup: sequential phases."""
 
     def __init__(self):
         super().__init__()
-        self._phase = "type"  # type, recipe, param, netlist, summary
+        self._phase = "type"
         self._sel = 0
         self._mode = "recipe"
         self._recipe_idx = 0
@@ -68,7 +65,6 @@ class ExperimentSetupScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {item}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "recipe":
             lines.append(("header", "Recipe:"))
@@ -76,7 +72,6 @@ class ExperimentSetupScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {r['name']}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "param":
             lines.append(("header", "Parameter to sweep:"))
@@ -84,30 +79,30 @@ class ExperimentSetupScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {label}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "values":
-            if self._edit_mode:
-                lines.append(("header", "Enter values (comma-sep) or range (from,to,step):"))
-                lines.append(("text", f"  [{self._edit_buffer}]"))
-                lines.append(("blank", ""))
-            else:
-                lines.append(("header", "Value specification:"))
-                items = ["  Explicit values (comma-separated)", "  Range with step"]
-                for i, item in enumerate(items):
-                    p = ">" if i == self._sel else " "
-                    t = "option" if i == self._sel else "text"
-                    lines.append((t, f"  {p} {item}"))
-                lines.append(("blank", ""))
+            lines.append(("header", "Value specification:"))
+            items = ["  Explicit values (comma-separated)", "  Range with step"]
+            for i, item in enumerate(items):
+                p = ">" if i == self._sel else " "
+                t = "option" if i == self._sel else "text"
+                lines.append((t, f"  {p} {item}"))
 
-        elif self._phase == "values_input":
+        elif self._phase == "values_explicit":
             if self._edit_mode:
-                lines.append(("header", "Enter values (comma-sep) or range (from,to,step):"))
+                lines.append(("header", "Enter values (comma-separated):"))
                 lines.append(("text", f"  [{self._edit_buffer}]"))
-                lines.append(("blank", ""))
             else:
                 lines.append(("header", f"Values: {self._sweep_values}"))
-                lines.append(("blank", ""))
+                lines.append(("option", "  Press Enter to edit, n for next"))
+
+        elif self._phase == "values_range":
+            if self._edit_mode:
+                lines.append(("header", "Enter range (from,to,step):"))
+                lines.append(("text", f"  [{self._edit_buffer}]"))
+            else:
+                lines.append(("header", f"Values: {self._sweep_values}"))
+                lines.append(("option", "  Press Enter to edit, n for next"))
 
         elif self._phase == "num_runs":
             if self._edit_mode:
@@ -116,7 +111,6 @@ class ExperimentSetupScreen(Screen):
             else:
                 lines.append(("header", "Runs per value:"))
                 lines.append(("option", f"  {self._num_runs}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "netlist":
             lines.append(("header", "Netlist:"))
@@ -124,7 +118,6 @@ class ExperimentSetupScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {n}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "delete":
             lines.append(("header", "Delete artifacts after report?"))
@@ -133,7 +126,6 @@ class ExperimentSetupScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {item}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "summary":
             net_name = nets[self._netlist_idx] if self._netlist_idx < len(nets) else "?"
@@ -143,7 +135,6 @@ class ExperimentSetupScreen(Screen):
             lines.append(("text", f"  Sweep param: {self._sweep_param}"))
             lines.append(("text", f"  Values: {self._sweep_values}"))
             lines.append(("text", f"  Runs per value: {self._num_runs}"))
-            lines.append(("blank", ""))
 
         for i, w in enumerate(self._widgets):
             if i < len(lines):
@@ -152,9 +143,6 @@ class ExperimentSetupScreen(Screen):
                 if typ == "option":
                     w.styles.background = "#ffffff"
                     w.styles.color = "#000000"
-                elif typ == "info":
-                    w.styles.background = "#000000"
-                    w.styles.color = "#888888"
                 elif typ == "header":
                     w.styles.background = "#000000"
                     w.styles.color = "#ffffff"
@@ -173,7 +161,7 @@ class ExperimentSetupScreen(Screen):
             return len(self._param_list)
         elif self._phase == "values":
             return 2
-        elif self._phase == "num_runs":
+        elif self._phase in ("values_explicit", "values_range", "num_runs"):
             return 1
         elif self._phase == "delete":
             return 2
@@ -186,7 +174,7 @@ class ExperimentSetupScreen(Screen):
         if self._edit_mode:
             if event.key == "enter":
                 self._edit_mode = False
-                if self._phase == "values_input":
+                if self._phase in ("values_explicit", "values_range"):
                     self._sweep_values = self._parse_values(self._edit_buffer)
                 elif self._phase == "num_runs":
                     try:
@@ -207,15 +195,20 @@ class ExperimentSetupScreen(Screen):
                 event.stop()
                 return
             elif event.key == "n":
-                # Save and exit edit mode, then fall through to normal n handler
-                if self._phase == "num_runs":
+                if self._phase in ("values_explicit", "values_range"):
+                    self._sweep_values = self._parse_values(self._edit_buffer)
+                elif self._phase == "num_runs":
                     try:
                         self._num_runs = max(1, int(self._edit_buffer))
                     except ValueError:
                         self._num_runs = 3
                 self._edit_mode = False
                 self._rebuild()
-                # Don't stop/return — let n fall through
+            elif event.key == "comma" or event.key == ",":
+                self._edit_buffer += ","
+                self._rebuild()
+                event.stop()
+                return
             elif len(event.key) == 1:
                 self._edit_buffer += event.key
                 self._rebuild()
@@ -225,7 +218,6 @@ class ExperimentSetupScreen(Screen):
                 return
 
         max_sel = self._max_sel()
-
         if event.key == "j":
             self._sel = (self._sel + 1) % max_sel
             self._rebuild()
@@ -255,16 +247,20 @@ class ExperimentSetupScreen(Screen):
             self._phase = "param" if self._mode == "custom" else "recipe"
             self._sel = 0
             self._rebuild()
-        elif self._phase == "values_input":
+        elif self._phase in ("values_explicit", "values_range"):
             self._phase = "values"
             self._sel = 0
             self._rebuild()
+        elif self._phase == "num_runs":
+            if self._mode == "recipe":
+                self._phase = "recipe"
+                self._sel = self._recipe_idx
+            else:
+                self._phase = "values_explicit"
+                self._sel = 0
+            self._rebuild()
         elif self._phase == "netlist":
             self._phase = "num_runs"
-            self._sel = 0
-            self._rebuild()
-        elif self._phase == "num_runs":
-            self._phase = "values_input" if self._mode == "custom" else "recipe"
             self._sel = 0
             self._rebuild()
         elif self._phase == "delete":
@@ -272,18 +268,15 @@ class ExperimentSetupScreen(Screen):
             self._sel = self._netlist_idx
             self._rebuild()
         elif self._phase == "summary":
-            self._phase = "netlist"
-            self._sel = self._netlist_idx
+            self._phase = "delete"
+            self._sel = 0
             self._rebuild()
 
     def _handle_enter(self):
         nets = available_netlists()
         if self._phase == "type":
             self._mode = "recipe" if self._sel == 0 else "custom"
-            if self._mode == "recipe":
-                self._phase = "recipe"
-            else:
-                self._phase = "param"
+            self._phase = "recipe" if self._mode == "recipe" else "param"
             self._sel = 0
             self._rebuild()
         elif self._phase == "recipe":
@@ -301,15 +294,22 @@ class ExperimentSetupScreen(Screen):
             self._rebuild()
         elif self._phase == "values":
             if self._sel == 0:
-                self._phase = "values_input"
+                self._phase = "values_explicit"
                 self._edit_mode = True
                 self._edit_buffer = ",".join(str(v) for v in self._sweep_values)
-                self._rebuild()
             else:
-                self._phase = "values_input"
+                self._phase = "values_range"
                 self._edit_mode = True
                 self._edit_buffer = "64,256,64"
-                self._rebuild()
+            self._rebuild()
+        elif self._phase == "values_explicit":
+            self._edit_mode = True
+            self._edit_buffer = ",".join(str(v) for v in self._sweep_values)
+            self._rebuild()
+        elif self._phase == "values_range":
+            self._edit_mode = True
+            self._edit_buffer = ",".join(str(v) for v in self._sweep_values)
+            self._rebuild()
         elif self._phase == "num_runs":
             self._edit_mode = True
             self._edit_buffer = str(self._num_runs)
@@ -326,7 +326,7 @@ class ExperimentSetupScreen(Screen):
             self._rebuild()
 
     def _handle_next(self):
-        if self._phase == "values_input":
+        if self._phase in ("values_explicit", "values_range"):
             self._phase = "num_runs"
             self._sel = 0
             self._rebuild()
@@ -352,27 +352,24 @@ class ExperimentSetupScreen(Screen):
                 "graph_ppo": {"num_iterations": 100, "freeze_encoder": False},
             }
             from .param_editor import VimFormScreen
-            sweep_param = self._sweep_param
-            sweep_values = self._sweep_values
+            sp = self._sweep_param
+            sv = self._sweep_values
+            nr = self._num_runs
+            da = self._delete_artifacts
 
-            def _launch_experiment(config):
+            def _launch(config):
                 self.app.push_screen(
                     ExperimentProgressScreen(
-                        base_config=config,
-                        sweep_param=sweep_param,
-                        sweep_values=sweep_values,
-                        num_runs=self._num_runs,
-                        delete_artifacts=self._delete_artifacts,
+                        base_config=config, sweep_param=sp,
+                        sweep_values=sv, num_runs=nr, delete_artifacts=da,
                     )
                 )
 
             self.app.push_screen(
                 VimFormScreen(
-                    mode="full_pipeline",
-                    config=base_config,
+                    mode="full_pipeline", config=base_config,
                     title="Base Configuration for Experiment",
-                    submit_label="Start Experiment",
-                    submit_callback=_launch_experiment,
+                    submit_label="Start Experiment", submit_callback=_launch,
                 )
             )
 
@@ -395,7 +392,6 @@ class ExperimentSetupScreen(Screen):
 
 
 class ExperimentProgressScreen(Screen):
-    """Shows progress across multiple experiment runs."""
 
     def __init__(self, base_config: dict, sweep_param: str, sweep_values: list, num_runs: int = 3, delete_artifacts: bool = False):
         super().__init__()
@@ -489,7 +485,6 @@ class ExperimentProgressScreen(Screen):
 
 
 class ExperimentResultsScreen(Screen):
-    """Shows experiment results."""
 
     def __init__(self, results, sweep_param, sweep_values):
         super().__init__()
@@ -501,8 +496,7 @@ class ExperimentResultsScreen(Screen):
         yield Static("Experiment Complete")
         yield Static("")
         with Vertical(id="complete-container"):
-            best_hpwl = min((r.get("hpwl", float("inf")) for r in self.results if r.get("hpwl") is not None),
-                            default=None)
+            best_hpwl = min((r.get("hpwl", float("inf")) for r in self.results if r.get("hpwl") is not None), default=None)
             if best_hpwl is not None:
                 best_result = next((r for r in self.results if r.get("hpwl") == best_hpwl), None)
                 best_val = best_result["value"] if best_result else "?"

@@ -1,6 +1,6 @@
 """
-Live training monitor screen. Runs training in a background thread
-with safe UI updates via call_from_thread.
+Training progress monitor. Runs training in a background thread
+with UI updates via call_from_thread.
 """
 
 import threading
@@ -19,7 +19,6 @@ from ...netlist import Netlist
 
 
 class TrainProgressScreen(Screen):
-    """Shows live metrics, progress bar, and console log during training."""
 
     def __init__(self, config: dict, experiment_label: str = "Training",
                  run_index: int = 0, total_runs: int = 1):
@@ -70,7 +69,6 @@ class TrainProgressScreen(Screen):
         self._thread.start()
 
     def _run_training(self) -> None:
-        """Run in a background thread. UI updates via call_from_thread."""
         try:
             config = self.config
             mode = config["mode"]
@@ -185,7 +183,6 @@ class TrainProgressScreen(Screen):
 
     def _on_progress(self, metrics: dict) -> None:
         total = self.config.get("num_iterations", self.config.get("num_epochs", 100))
-        # For full pipeline, use the correct stage-specific total
         stage = metrics.get("stage", "")
         if "Vanilla" in stage:
             total = self.config.get("vanilla_iterations", total)

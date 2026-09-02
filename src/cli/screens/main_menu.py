@@ -6,7 +6,6 @@ from .._utils import footer_bar
 
 
 class MainMenuScreen(Screen):
-    """Main menu with Train, Analyze, Experiment, Exit."""
 
     BINDINGS = [
         ("q", "quit_app", "Quit"),

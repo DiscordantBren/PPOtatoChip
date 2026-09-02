@@ -1,6 +1,7 @@
 """
-Vim-style parameter editor.
-j/k move between fields. Enter to edit. Enter to confirm. Esc to cancel.
+Vim-style parameter form.
+j/k moves between fields. Enter to edit. Characters type into the value.
+Esc to cancel. s to submit.
 """
 
 from pathlib import Path
@@ -11,17 +12,10 @@ from textual.widgets import Static
 from textual.containers import Vertical
 from textual import events
 
+from .._utils import available_netlists, footer_bar
+
 
 class VimFormScreen(Screen):
-    """Vim-style parameter form for training config.
-    
-    j/k  - navigate fields
-    Enter - start editing / confirm edit
-    Esc  - cancel edit / go back
-    s    - submit form
-    """
-
-    BINDINGS = []
 
     def __init__(self, mode: str = "vanilla_pvn", config: dict | None = None,
                  title: str = "", submit_label: str = "Start",
@@ -53,7 +47,6 @@ class VimFormScreen(Screen):
         yield Static("")
         with Vertical(id="form-container"):
             pass
-        from .._utils import footer_bar
         yield footer_bar("j Down  k Up  Enter Edit  Esc Back  s Start  Tab Next")
 
     def on_mount(self) -> None:
@@ -85,16 +78,12 @@ class VimFormScreen(Screen):
             self._add_field("rp_epochs", str(c.get("num_epochs", 100)), "num_epochs", "int")
 
         if self.mode == "reward_predictor":
-            # Scan for available placements.jsonl files
             from .._utils import artifact_runs
             placement_options = []
             for run_name in artifact_runs():
                 pp = Path("artifacts") / run_name / "placements.jsonl"
                 if pp.exists():
                     placement_options.append((run_name, str(pp)))
-            default_pp = str(Path("artifacts") / artifact_runs()[0] / "placements.jsonl") \
-                if artifact_runs() and (Path("artifacts") / artifact_runs()[0] / "placements.jsonl").exists() \
-                else "(not found)"
             if not placement_options:
                 self._add_field("placements_path", c.get("placements_path", "(not found)"), "placements_path", "path")
             else:
@@ -102,7 +91,6 @@ class VimFormScreen(Screen):
                                 "placements_path", "select", options=placement_options)
 
         if self.mode in ("graph_ppo",):
-            # Scan for available encoder.pt files
             from .._utils import artifact_runs
             encoder_options = []
             for run_name in artifact_runs():
@@ -125,7 +113,6 @@ class VimFormScreen(Screen):
             self._add_field("vanilla_iter", str(c.get("vanilla_iterations", 100)), "vanilla_iterations", "int")
             self._add_field("graph_iter", str(c.get("graph_ppo_iterations", 100)), "graph_ppo_iterations", "int")
 
-        # Mount field widgets
         container = self.query_one("#form-container")
         for f in self._fields:
             w = Static("")
@@ -156,8 +143,8 @@ class VimFormScreen(Screen):
         self._edit_original = f["value"]
         if f["type"] == "select":
             opts = f["options"]
-            lines = []
             current = f["value"]
+            lines = []
             for opt_label, opt_val in opts:
                 p = ">" if str(opt_val) == current else " "
                 lines.append(f"    {p} {opt_label}")
@@ -187,9 +174,9 @@ class VimFormScreen(Screen):
             val = f["value"]
             typ = f["type"]
             if typ == "int":
-                c[key] = int(val)
+                c[key] = int(val) if val else 0
             elif typ == "float":
-                c[key] = float(val)
+                c[key] = float(val) if val else 0.0
             elif typ == "select":
                 for opt_label, opt_val in f["options"]:
                     if str(opt_val) == val:
@@ -219,7 +206,6 @@ class VimFormScreen(Screen):
         if self._editing:
             f = self._fields[self._sel]
             if f["type"] == "select":
-                # Move through options
                 self._cycle_select(1)
             return
         self._sel = (self._sel + 1) % len(self._fields)

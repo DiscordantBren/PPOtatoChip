@@ -1,6 +1,4 @@
-"""
-Analyze mode screen - vim-style plot generation.
-"""
+# Analyze mode - generate plots from artifact runs.
 
 from datetime import datetime
 from pathlib import Path
@@ -18,7 +16,6 @@ ANALYSIS_DIR = Path("analysis")
 
 
 class AnalyzeModeScreen(Screen):
-    """Vim-style plot generation selector."""
 
     PLOT_TYPES = [
         ("learning-curve", "Learning Curve"),
@@ -28,7 +25,7 @@ class AnalyzeModeScreen(Screen):
 
     def __init__(self):
         super().__init__()
-        self._phase = "plot_type"  # plot_type, before, after, netlist, run, gen_netlists, runs, labels, done
+        self._phase = "plot_type"
         self._sel = 0
         self._plot_type = "learning-curve"
         self._run_idx = 0
@@ -52,11 +49,9 @@ class AnalyzeModeScreen(Screen):
         self._rebuild()
 
     def _rebuild(self):
-        runs = artifact_runs()
-        nets = available_netlists()
-        lines = []
         runs = artifact_runs() or ["(no runs)"]
         nets = available_netlists() or ["(no netlists)"]
+        lines = []
 
         if self._phase == "plot_type":
             lines.append(("header", "Plot type:"))
@@ -64,7 +59,6 @@ class AnalyzeModeScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {label}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "before":
             lines.append(("header", "Before run (Vanilla PVN):"))
@@ -72,7 +66,6 @@ class AnalyzeModeScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {r}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "after":
             lines.append(("header", "After run (Graph PPO):"))
@@ -80,7 +73,6 @@ class AnalyzeModeScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {r}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "netlist":
             lines.append(("header", "Netlist:"))
@@ -88,18 +80,16 @@ class AnalyzeModeScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {n}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "run":
-            lines.append(("header", "Run (must contain graph_ppo_final.pt):"))
             gppo_runs = [r for r in runs if (Path("artifacts") / r / "graph_ppo_final.pt").exists()]
             if not gppo_runs:
                 gppo_runs = ["(no graph ppo runs found)"]
+            lines.append(("header", "Run (must contain graph_ppo_final.pt):"))
             for i, r in enumerate(gppo_runs):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p} {r}"))
-            lines.append(("blank", ""))
 
         elif self._phase == "gen_netlists":
             lines.append(("header", "Select netlists to evaluate:"))
@@ -108,7 +98,6 @@ class AnalyzeModeScreen(Screen):
                 p = ">" if i == self._sel else " "
                 t = "option" if i == self._sel else "text"
                 lines.append((t, f"  {p}{selected} {n}"))
-            lines.append(("blank", ""))
 
         for i, w in enumerate(self._widgets):
             if i < len(lines):
@@ -117,9 +106,6 @@ class AnalyzeModeScreen(Screen):
                 if typ == "option":
                     w.styles.background = "#ffffff"
                     w.styles.color = "#000000"
-                elif typ == "info":
-                    w.styles.background = "#000000"
-                    w.styles.color = "#888888"
                 elif typ == "header":
                     w.styles.background = "#000000"
                     w.styles.color = "#ffffff"
@@ -133,10 +119,8 @@ class AnalyzeModeScreen(Screen):
         if self._phase == "plot_type":
             return len(self.PLOT_TYPES)
         elif self._phase == "run":
-            if self._plot_type == "scale-generalize":
-                gppo_runs = [r for r in runs if (Path("artifacts") / r / "graph_ppo_final.pt").exists()]
-                return max(len(gppo_runs), 1)
-            return len(runs)
+            gppo_runs = [r for r in runs if (Path("artifacts") / r / "graph_ppo_final.pt").exists()]
+            return max(len(gppo_runs), 1)
         elif self._phase in ("before", "after"):
             return len(runs)
         elif self._phase in ("netlist", "gen_netlists"):
@@ -160,29 +144,15 @@ class AnalyzeModeScreen(Screen):
             if self._phase == "plot_type":
                 self.app.pop_screen()
             elif self._phase == "before":
-                self._phase = "plot_type"
-                self._sel = 1
-                self._rebuild()
+                self._phase = "plot_type"; self._sel = 1; self._rebuild()
             elif self._phase == "after":
-                self._phase = "before"
-                self._sel = self._before_idx
-                self._rebuild()
+                self._phase = "before"; self._sel = self._before_idx; self._rebuild()
             elif self._phase == "netlist":
-                self._phase = "after"
-                self._sel = self._after_idx
-                self._rebuild()
+                self._phase = "after"; self._sel = self._after_idx; self._rebuild()
             elif self._phase == "run":
-                if self._plot_type == "scale-generalize":
-                    self._phase = "plot_type"
-                    self._sel = 2
-                else:
-                    self._phase = "plot_type"
-                    self._sel = 0
-                self._rebuild()
+                self._phase = "plot_type"; self._sel = 0; self._rebuild()
             elif self._phase == "gen_netlists":
-                self._phase = "run"
-                self._sel = self._run_idx
-                self._rebuild()
+                self._phase = "run"; self._sel = self._run_idx; self._rebuild()
             event.stop()
         elif event.key == "enter":
             self._handle_enter(runs, nets)
@@ -197,30 +167,22 @@ class AnalyzeModeScreen(Screen):
             self._plot_type = entry[0]
             pt = entry[0]
             if pt == "learning-curve":
-                self._phase = "run"
-                self._sel = 0
+                self._phase = "run"; self._sel = 0
             elif pt == "placement-compare":
-                self._phase = "before"
-                self._sel = 0
+                self._phase = "before"; self._sel = 0
             elif pt == "scale-generalize":
-                self._phase = "run"
-                self._sel = 0
+                self._phase = "run"; self._sel = 0
                 self._gen_netlist_idxs = list(range(len(nets))) if nets else []
-            elif pt == "encoder-ablation":
-                self._notify("Encoder ablation not yet implemented in vim mode")
-                return
             self._rebuild()
 
         elif self._phase == "before":
             self._before_idx = self._sel
-            self._phase = "after"
-            self._sel = self._after_idx
+            self._phase = "after"; self._sel = self._after_idx
             self._rebuild()
 
         elif self._phase == "after":
             self._after_idx = self._sel
-            self._phase = "netlist"
-            self._sel = self._netlist_idx
+            self._phase = "netlist"; self._sel = self._netlist_idx
             self._rebuild()
 
         elif self._phase == "netlist":
@@ -233,8 +195,7 @@ class AnalyzeModeScreen(Screen):
                 gppo_runs = [r for r in runs if (Path("artifacts") / r / "graph_ppo_final.pt").exists()]
                 if self._sel < len(gppo_runs):
                     self._run_idx = runs.index(gppo_runs[self._sel])
-                self._phase = "gen_netlists"
-                self._sel = 0
+                self._phase = "gen_netlists"; self._sel = 0
                 self._rebuild()
             else:
                 self._generate_learning(runs)

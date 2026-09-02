@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-"""PPOtatoChip — Textual TUI entry point.
-
-Usage:
-    python src/cli.py              # Launch the interactive TUI
-    python src/cli.py --help       # Show help
-    python src/cli.py --version    # Show version
-"""
+# Entry point. Run with `python src/cli.py`.
 
 import sys
 from pathlib import Path
@@ -28,7 +21,6 @@ def main():
         print("PPOtatoChip 0.1.0")
         sys.exit(0)
 
-    # Launch the TUI
     from src.cli.tui import main as tui_main
     tui_main()
 

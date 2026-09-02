@@ -1,6 +1,4 @@
-"""
-Training results / completion screen.
-"""
+# Training results / completion screen.
 
 from textual.app import ComposeResult
 from textual.screen import Screen
@@ -12,7 +10,6 @@ from .._utils import footer_bar
 
 
 class TrainCompleteScreen(Screen):
-    """Shows completion summary after a training run."""
 
     def __init__(self, result, config: dict):
         super().__init__()

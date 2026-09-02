@@ -1,4 +1,4 @@
-"""Shared utility functions for CLI screens."""
+# Shared helpers - netlists, artifact runs, footer bar.
 
 from pathlib import Path
 
@@ -23,6 +23,5 @@ def artifact_runs() -> list[str]:
 
 
 def footer_bar(text: str) -> Static:
-    """Create a custom footer bar styled like a vim command line."""
     bar = Static(text, classes="footer-bar")
     return bar
