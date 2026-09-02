@@ -4,9 +4,9 @@ AlphaChip, but less alpha.
 Work in progress.
 
 ---
-
-![Demo placement for ami49](demo_placement.png)
 ![TUI](tui_img.png)
+![Demo placement for ami49](demo_placement.png)
+
 
 Based on the Google AlphaChip paper.
 
@@ -30,8 +30,8 @@ model capacity, ablation etc.). It runs multiple seeds and
 generates a multi-page PDF report with learning curves, HPWL comparisons,
 side-by-side placement grids, summary table.
 
+To run the tui:
 ```bash
-source ~/venvs/jpter/bin/activate
 python src/cli.py
 ```
 
