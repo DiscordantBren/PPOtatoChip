@@ -12,9 +12,10 @@ Based on the Google AlphaChip paper - Chip Placement with Deep Reinforcement Lea
 
 ![Demo placement for ami49](demo_placement.png)
 
-A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist
-
-
+-- A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist
+<br>
+<br>
+<br>
 
 The idea is to sequentially place components onto a canvas so wirelength stays 
 low. PPOtatoChip tries to learn that using Proximal Policy Optimization (PPO)
