@@ -1,0 +1,79 @@
+Screen {
+    background: #000000;
+    color: #ffffff;
+}
+
+Static, Label {
+    background: #000000;
+    color: #ffffff;
+}
+
+.footer-bar {
+    background: #ffffff;
+    color: #000000;
+    text-style: bold;
+    padding: 0 2;
+    margin: 0 0;
+    height: 1;
+    dock: bottom;
+}
+
+Button {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 0 0;
+    margin: 0 0;
+}
+
+Button:focus {
+    background: #ffffff;
+    color: #000000;
+    border: none;
+}
+
+ProgressBar {
+    background: #000000;
+    color: #ffffff;
+}
+
+RichLog {
+    background: #000000;
+    color: #ffffff;
+}
+
+#action-bar {
+    align: center middle;
+    height: 3;
+    margin: 1 0 0 0;
+}
+
+#form-container {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+#progress-container {
+    margin: 0 0;
+    padding: 0 0;
+}
+
+#log-container {
+    height: 10;
+    margin: 1 0 0 0;
+}
+
+#log-view {
+    background: #000000;
+    color: #ffffff;
+}
+
+#complete-container {
+    align: center middle;
+    margin: 2 4;
+}
+
+#complete-container > Static {
+    text-align: center;
+    margin: 0 0;
+}

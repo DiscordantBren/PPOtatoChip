@@ -24,7 +24,10 @@ def train_VanillaPVN(
         clip_epsilon: float=0.2,
         value_loss_coef: float=0.5,
         entropy_coef: float=0.01,
-        num_iterations: int=10
+        num_iterations: int=10,
+        lr: float=3e-4,
+        progress_callback=None,
+        stop_event=None,
         ):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -40,22 +43,30 @@ def train_VanillaPVN(
 
     model = PolicyValueNetwork(input_dim=input_dim, hidden_dim=hidden_dim, num_hidden = num_hidden, output_dim=num_actions).to(device)
 
-    optimizer = Adam(model.parameters(), lr=3e-4)
+    optimizer = Adam(model.parameters(), lr=lr)
 
     experiment = Experiment(
                     config={
                         "iterations": num_iterations,
-                        "learning_rate": 3e-4,
+                        "learning_rate": lr,
                         "gamma": gamma,
                         "clip_epsilon": clip_epsilon,
                         "value_loss_coef": value_loss_coef,
                         "entropy_coef": entropy_coef,
+                        "hidden_dim": hidden_dim,
+                        "num_hidden": num_hidden,
                         "grid_rows": env.num_rows,
-                        "grid_cols": env.num_cols
+                        "grid_cols": env.num_cols,
+                        "netlist_path": netlist_path,
                     },
+                    tag="vanilla_pvn",
                 )
 
     for iteration in range(num_iterations):
+
+        if stop_event and stop_event.is_set():
+            print("Training stopped by user.")
+            break
 
         rollout = run_episode(env=env, model=model, device=device)
 
@@ -80,6 +91,8 @@ def train_VanillaPVN(
             device=device
         )
 
+        total_reward = sum(rollout.rewards)
+
         print(f"\nIteration {iteration + 1}")
 
         for epoch in range(len(metrics["loss"])):
@@ -92,12 +105,33 @@ def train_VanillaPVN(
             )
 
         print(
-            f"Reward {sum(rollout.rewards):8.3f} | "
+            f"Reward {total_reward:8.3f} | "
             f"Steps {len(rollout.actions):3d}"
         )
 
+        hpwl = env.get_metrics().get("hpwl", None) if not rollout.failed else None
+
+        iteration_metrics = {
+            "iteration": iteration,
+            "reward": total_reward,
+            "steps": len(rollout.actions),
+            "failed": rollout.failed,
+            "hpwl": hpwl,
+            "loss_mean": sum(metrics["loss"]) / len(metrics["loss"]),
+            "policy_loss_mean": sum(metrics["policy_loss"]) / len(metrics["policy_loss"]),
+            "value_loss_mean": sum(metrics["value_loss"]) / len(metrics["value_loss"]),
+            "entropy_mean": sum(metrics["entropy"]) / len(metrics["entropy"]),
+        }
+
+        experiment.append_metrics(iteration_metrics)
+
+        if progress_callback:
+            progress_callback(iteration_metrics)
+
     # saves the parameters for the vanilla ppo after training
     experiment.save_model(model, "ppo_initial.pt")
+
+    return experiment
 
 
 
@@ -113,6 +147,8 @@ def train_RewardPredictor(
         batch_size: int = 32,
         lr: float = 3e-4,
         num_epochs: int = 50,
+        progress_callback=None,
+        stop_event=None,
         ):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -151,9 +187,14 @@ def train_RewardPredictor(
                         "num_layers_r": num_layers_r,
                         "in_channels": in_channels,
                     },
+                    tag="reward_predictor",
                 )
 
     for epoch in range(num_epochs):
+
+        if stop_event and stop_event.is_set():
+            print("Training stopped by user.")
+            break
 
         model.train()
         total_loss = 0.0
@@ -178,6 +219,9 @@ def train_RewardPredictor(
         avg_loss = total_loss / len(dataset)
 
         print(f"Epoch {epoch + 1:3d} | MSE Loss {avg_loss:8.4f}")
+
+        if progress_callback:
+            progress_callback({"epoch": epoch, "mse_loss": avg_loss})
 
     # saves the parameters for the reward predictor (encoder used for later pretraining transfer)
     experiment.save_model(model, "reward_predictor.pt")
@@ -204,6 +248,9 @@ def train_GraphPPO(
         value_loss_coef: float = 0.5,
         entropy_coef: float = 0.01,
         num_iterations: int = 10,
+        lr: float = 3e-4,
+        progress_callback=None,
+        stop_event=None,
         ):
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -237,24 +284,34 @@ def train_GraphPPO(
                 param.requires_grad = False
             print("Encoder frozen.")
 
-    optimizer = Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=3e-4)
+    optimizer = Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=lr)
 
     experiment = Experiment(
                     config={
                         "iterations": num_iterations,
-                        "learning_rate": 3e-4,
+                        "learning_rate": lr,
                         "gamma": gamma,
                         "clip_epsilon": clip_epsilon,
                         "value_loss_coef": value_loss_coef,
                         "entropy_coef": entropy_coef,
+                        "hidden_channels_e": hidden_channels_e,
+                        "num_layers_e": num_layers_e,
+                        "hidden_dim": hidden_dim,
+                        "num_hidden": num_hidden,
                         "grid_rows": env.num_rows,
                         "grid_cols": env.num_cols,
                         "pretrained_encoder_path": pretrained_encoder_path,
                         "freeze_encoder": freeze_encoder,
+                        "netlist_path": netlist_path,
                     },
+                    tag="graph_ppo",
                 )
 
     for iteration in range(num_iterations):
+
+        if stop_event and stop_event.is_set():
+            print("Training stopped by user.")
+            break
 
         rollout = run_graph_episode(env=env, model=model, device=device)
 
@@ -279,6 +336,8 @@ def train_GraphPPO(
             device=device
         )
 
+        total_reward = sum(rollout.rewards)
+
         print(f"\nIteration {iteration + 1}")
 
         for epoch in range(len(metrics["loss"])):
@@ -291,9 +350,28 @@ def train_GraphPPO(
             )
 
         print(
-            f"Reward {sum(rollout.rewards):8.3f} | "
+            f"Reward {total_reward:8.3f} | "
             f"Steps {len(rollout.actions):3d}"
         )
+
+        hpwl = env.get_metrics().get("hpwl", None) if not rollout.failed else None
+
+        iteration_metrics = {
+            "iteration": iteration,
+            "reward": total_reward,
+            "steps": len(rollout.actions),
+            "failed": rollout.failed,
+            "hpwl": hpwl,
+            "loss_mean": sum(metrics["loss"]) / len(metrics["loss"]),
+            "policy_loss_mean": sum(metrics["policy_loss"]) / len(metrics["policy_loss"]),
+            "value_loss_mean": sum(metrics["value_loss"]) / len(metrics["value_loss"]),
+            "entropy_mean": sum(metrics["entropy"]) / len(metrics["entropy"]),
+        }
+
+        experiment.append_metrics(iteration_metrics)
+
+        if progress_callback:
+            progress_callback(iteration_metrics)
 
     experiment.save_model(model, "graph_ppo_final.pt")
 

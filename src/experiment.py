@@ -10,11 +10,12 @@ import torch
 class Experiment:
 
     # Create timestamped experiment directory
-    def __init__(self, root: str = "artifacts", config: dict | None = None):
+    def __init__(self, root: str = "artifacts", config: dict | None = None, tag: str = ""):
         
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        self.path = Path(root) / timestamp
-        self.path.mkdir(parents=True, exist_ok=False)
+        label = f"{tag}_{timestamp}" if tag else timestamp
+        self.path = Path(root) / label
+        self.path.mkdir(parents=True, exist_ok=True)
 
         # config file
         with open(self.path / "config.json", "w") as f:
@@ -41,4 +42,12 @@ class Experiment:
     def save_model(self, model: torch.nn.Module, filename: str):
 
         torch.save(model.state_dict(), self.path / filename)
+
+    def append_metrics(self, metrics: dict):
+
+        metrics_path = self.path / "metrics.jsonl"
+
+        with open(metrics_path, "a") as f:
+            json.dump(metrics, f)
+            f.write("\n")
 
