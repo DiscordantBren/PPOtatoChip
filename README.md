@@ -5,53 +5,46 @@ Work in progress.
 
 Based on the Google AlphaChip paper - Chip Placement with Deep Reinforcement Learning: arxiv/2004.10746, 2020.
 
----
+## Screenshots
 
 ![TUI](tui_img.png)
 
+-- The TUI.
+<br>
 
 ![Demo placement for ami49](demo_placement.png)
 
--- A demo placement by the model fine-tuned on the xerox netlist and applied on the ami49 netlist
+-- A demo placement by the model fine-tuned on the 10-component xerox netlist and applied on the 49-component ami49 netlist.
 <br>
 <br>
 <br>
 
-The idea is to sequentially place components onto a canvas so wirelength stays 
-low. PPOtatoChip tries to learn that using Proximal Policy Optimization (PPO)
-on Policy Value Networks connected graph neural networks.
+## Pipeline
 
-There are three stages in the pipeline:
+The idea is to sequentially place components on a canvas while keeping wirelength low.
 
-1. **Vanilla PVN** — dumb MLP policy places components one by one, learns
-   from negative HPWL(Half Perimeter Wirelength) reward. This generates a dataset of placements with corresponding HPWL.
-2. **Reward Predictor** — trains a GNN-MLP combo to predict wirelength from the the dataset generated above.
-3. **Graph PPO** — loads that pretrained GNN encoder (or starts from scratch - if you decide not to freeze the encoder)
-   and does actual graph-based placement.
+There are three stages in the training pipeline:
 
-The UI is a **Textual TUI**. Pick a netlist, tweak params, let it train.
-There is an option to cancel mid-run.
+1. **Vanilla PVN** — a policy-value network sequentially place components, using negative HPWL (Half-Perimeter Wirelength) as the reward. Once a placement is complete, Proximal Policy Optimization (PPO) is used to update the network. The placements and their HPWL values are collected into a dataset.
+2. **Reward Predictor** — trains an MLP attached to a Graph Neural Network (GNN) to predict wirelength of a placement using the dataset generated above. The GNN captures the structural relationships between components in the embedding.
+3. **Graph PPO** — the pretrained GNN encoder is attached to a policy-value network and training is done using PPO.
 
-There is also an **experiment system** for parameter sweeps (learning rate,
-model capacity, ablation etc.). It runs multiple seeds and
+The trained model is agnostic of the number of components to be placed and can be applied to a different netlist to generate a placement.
+
+
+## Features
+1. Pick a netlist, tweak the parameters, and start training. Training can be cancelled mid-run.
+
+2. There is an **experiment system** for parameter sweeps (learning rate,
+model capacity etc.). It runs multiple seeds and
 generates a multi-page PDF report with learning curves, HPWL comparisons,
-side-by-side placement grids, summary table.
+side-by-side placement grids, and a summary table.
 
-To run the tui:
-```bash
-python src/cli.py
-```
+3. The `netlists/` directory currently contains five netlists: `xerox`, `ami33`, `ami49`, `apte`, and `hp`. Training outputs are saved to `artifacts/` with timestamps, while plots and analysis are saved to `analysis/`.
 
+## Operation
 
-Five netlists in `netlists/` — xerox, ami33, ami49, apte, hp. Training
-outputs go to `artifacts/` with timestamps. Plots end up in `analysis/`.
-
-I'll make the GNN part actually beat the vanilla baseline
-one of these days.
-
-
-### Dependencies
-
+Dependencies:
 ```
 torch
 torch_geometric
@@ -59,18 +52,17 @@ textual
 matplotlib
 ```
 
----
+Clone the repo, install the dependencies, and run the TUI from inside the PPOtatoChip directory:
+
+```bash
+python src/cli.py
+```
+
+
 
 ## Planned Updates
 
-- **Fix visual bugs** — the tui is functional but sometimes has white bands at random places.
-- **Convergence analysis** — need to think more about this.
-- **Stress-test hyperparameters** — systematically run every knob (clip
-  epsilon, entropy coefficient, hidden dimensions ...) in isolation
-  to see if something breaks.
-- **Better wirelength metric** — HPWL is the standard proxy but it's not
-  great. Look into steiner-tree (and other) alternatives that correlate
-  better with real routing outcomes.
-- **Hybrid with classical placement** — A combination with Simulated Annealing or Force-directed placement might 
-  give better results. In fact in AlphaChip, only the macros are placed using the RL model, while the standard cells are 
-  placed using standard placers.
+- **Convergence analysis** — figure out when training converges.
+- **Better wirelength metric** — HPWL is convenient, but doesn't capture routing 
+quality very well. Try Steiner-tree based metrics and also account for congestion.
+- **Hybrid with classical placement** — try combining RL with Simulated Annealing or Force-directed Placement. AlphaChip uses RL for macros and conventional placers for standard cells.

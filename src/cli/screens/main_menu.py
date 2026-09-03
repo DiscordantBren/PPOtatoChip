@@ -28,7 +28,9 @@ class MainMenuScreen(Screen):
 ██║     ███████║██║██████╔╝
 ██║     ██╔══██║██║██╔═══╝
 ╚██████╗██║  ██║██║██║
- ╚═════╝╚═╝  ╚═╝╚═╝╚═╝"""
+ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝
+ 
+ """
         yield Static(logo)
         yield Static("  Reinforcement Learning for Chip Placement")
         yield Static("")
@@ -36,7 +38,8 @@ class MainMenuScreen(Screen):
         yield Static("  2. Analyze Runs")
         yield Static("  3. Run Experiment")
         yield Static("")
-        yield Static("  Press a number or q to quit")
+        yield Static("")
+        yield Static("  Navigation options are in the footer.")
         yield footer_bar("1 Train  2 Analyze  3 Experiment  q Quit")
 
     def action_train(self) -> None:

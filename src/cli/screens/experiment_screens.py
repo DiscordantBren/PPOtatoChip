@@ -55,6 +55,10 @@ class ExperimentSetupScreen(Screen):
         self._rebuild()
 
     def _rebuild(self):
+        for w in self._widgets:
+            w.update("")
+            w.styles.background = "#000000"
+            w.styles.color = "#ffffff"
         lines = []
         nets = available_netlists() or ["(no netlists)"]
 
@@ -95,6 +99,7 @@ class ExperimentSetupScreen(Screen):
             else:
                 lines.append(("header", f"Values: {self._sweep_values}"))
                 lines.append(("option", "  Press Enter to edit, n for next"))
+            lines.append(("blank", ""))
 
         elif self._phase == "values_range":
             if self._edit_mode:
@@ -103,6 +108,7 @@ class ExperimentSetupScreen(Screen):
             else:
                 lines.append(("header", f"Values: {self._sweep_values}"))
                 lines.append(("option", "  Press Enter to edit, n for next"))
+            lines.append(("blank", ""))
 
         elif self._phase == "num_runs":
             if self._edit_mode:
@@ -111,6 +117,7 @@ class ExperimentSetupScreen(Screen):
             else:
                 lines.append(("header", "Runs per value:"))
                 lines.append(("option", f"  {self._num_runs}"))
+            lines.append(("blank", ""))
 
         elif self._phase == "netlist":
             lines.append(("header", "Netlist:"))
