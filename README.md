@@ -13,6 +13,7 @@ Based on the Google AlphaChip paper - Chip Placement with Deep Reinforcement Lea
 
 <br>
 <br>
+
 ![Demo placement for ami49](demo_placement.png)
 
 -- A demo placement by the model fine-tuned on the 10-component xerox netlist and applied on the 49-component ami49 netlist.
